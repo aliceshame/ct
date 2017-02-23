@@ -1,0 +1,37 @@
+extends layout
+
+block page
+    style.
+        h1 {
+            line-height : 40px;
+            font-size   : 26px;
+        }
+
+        h2 {
+            padding     : 7px 0;
+            line-height : 25px;
+            font-size   : 16px;
+        }
+
+        .editor-grid-meta {
+            flex-direction : column;
+        }
+    .mdl-cell.mdl-cell--3-col.mdl-cell--hide-tablet
+    .capsule-card.mdl-cell.mdl-cell--6-col.mdl-cell--8-col-tablet.mdl-card.mdl-shadow--2dp
+        .mdl-card__title
+            .mdl-grid.editor-grid-meta(itemscope='', itemtype='http://schema.org/Organization')
+                h1= tl('Contacts')
+
+                h2(itemprop= 'name') CapsulaTime
+
+                p.hidden(itemprop='address', itemscope='', itemtype='http://schema.org/PostalAddress')
+                    strong= tl('Address: ')
+                    span(itemprop='addressLocality') Белгород
+
+                p.hidden
+                    strong= tl('Telephone (Russian): ')
+                    span(itemprop= 'telephone') +7 915 169-49-48
+
+                p
+                    strong= tl('Main support e-mail: ')
+                    a(href= 'mailto:support@capsulatime.com', itemprop= 'email') support@capsulatime.com

@@ -1,0 +1,73 @@
+extends layout
+
+block page
+    .mdl-cell.mdl-cell--3-col.mdl-cell--hide-tablet
+    .sealed-card.mdl-cell.mdl-cell--6-col.mdl-cell--8-col-tablet.mdl-card.mdl-shadow--2dp
+        if expired
+            .mdl-card__title
+                h4= tl('Cannot seal the capsule')
+                p= tl('Please, enter date greater than current date by 1 day.')
+                p
+                    strong= tl('Please note: ')
+                    = tl('You cannot edit or delete sealed capsules.')
+                p
+                    strong= tl('Please note: ')
+                    = tl('Non-sealed capsule will be automatically deleted in three months after creation date.')
+                p
+                    a(href= '/edit/' + capsule.user.username + '/' + capsule.capsule.id).mdl-button.mdl-button--raised.mdl-button--colored
+                        i.fa.fa-fw.fa-angle-left
+                        = tl('Back to capsule editing')
+        else
+            form.mdl-card__title(method='post', action='https://wl.walletone.com/checkout/checkout/Index')
+                h4= tl('Capsule sealing')
+
+                p: strong
+                    = tl('Payment amount: ')
+                    = tl.currency(pay.amount)
+
+                p= tl('Capsule will be sealed after payment was successfully processed.')
+                p
+                    strong= tl('Please note: ')
+                    = tl('You cannot edit or delete sealed capsules.')
+                p
+                    strong= tl('Please note: ')
+                    = tl('Non-sealed capsule will be automatically deleted in three months after creation date.')
+
+                input(name='WMI_AUTO_LOCATION',  type= 'hidden', value='1')
+                input(name='WMI_CURRENCY_ID',    type= 'hidden', value='643')
+                input(name='WMI_DESCRIPTION',    type= 'hidden', value='CapsulaTime.com ID#' + capsule.capsule.id)
+                input(name='WMI_EXPIRED_DATE',   type= 'hidden', value=pay.expired.utc().format('YYYY-MM-DDTHH:mm:ss'))
+                input(name='WMI_MERCHANT_ID',    type= 'hidden', value='120958794124')
+                input(name='WMI_FAIL_URL',       type= 'hidden', value='https://capsulatime.com/manko')
+                input(name='WMI_PTENABLED',      type= 'hidden', value='CreditCardEUR')
+                input(name='WMI_PTENABLED',      type= 'hidden', value='CreditCardRUB')
+                input(name='WMI_PTENABLED',      type= 'hidden', value='CreditCardUSD')
+                input(name='WMI_PTENABLED',      type= 'hidden', value='QiwiWalletRUB')
+                input(name='WMI_PTENABLED',      type= 'hidden', value='SberOnlineRUB')
+                input(name='WMI_PTENABLED',      type= 'hidden', value='WalletOneEUR')
+                input(name='WMI_PTENABLED',      type= 'hidden', value='WalletOneRUB')
+                input(name='WMI_PTENABLED',      type= 'hidden', value='WalletOneUSD')
+                input(name='WMI_PTENABLED',      type= 'hidden', value='WebMoneyRUB')
+                input(name='WMI_PTENABLED',      type= 'hidden', value='YandexMoneyRUB')
+                input(name='WMI_PAYMENT_AMOUNT', type= 'hidden', value=pay.amount)
+                input(name='WMI_PAYMENT_NO',     type= 'hidden', value=pay.paymentId)
+                input(name='WMI_SUCCESS_URL',    type= 'hidden', value='https://capsulatime.com/tinpo')
+                input(name=pay.secret,           type= 'hidden', value=pay.secret)
+                input(name='WMI_SIGNATURE',      type= 'hidden', value=pay.signature)
+
+                p
+                    a(href= '/edit/' + capsule.user.username + '/' + capsule.capsule.id).mdl-button.mdl-button--raised.mdl-button--colored
+                        i.fa.fa-fw.fa-angle-left
+                        = tl('Back to capsule editing')
+                    button(type='submit').mdl-button.mdl-button--raised.mdl-button--colored
+                        = tl('Proceed to payment')
+                        i.fa.fa-fw.fa-angle-right
+
+                p: img(src= '/static/images/visa.png')
+                //- p= tl('If you are using AdBlock, please turn it off.')
+                //- p= tl('This is the only page with ads, so it will not be too annoying.')
+                //- a(href='/library').mdl-button.mdl-button--raised.mdl-button--colored= tl('Proceed to capsules list')
+                //- .ads
+                    h6= tl('Advertisement')
+    .mdl-cell.mdl-cell--3-col.mdl-cell--hide-tablet
+

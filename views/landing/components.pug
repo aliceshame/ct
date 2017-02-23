@@ -1,0 +1,25 @@
+mixin text (label)
+    input(type= 'text' placeholder= label)&attributes(attributes)
+
+mixin mail (label)
+    input(type= 'email' placeholder= label)&attributes(attributes)
+
+mixin pass (label)
+    input(type= 'password' placeholder= label)&attributes(attributes)
+
+mixin button
+    .button(tabindex= 0)&attributes(attributes)
+        block
+
+
+mixin message(level)
+    .message(class= 'message_level_' + level)&attributes(attributes)
+        block
+
+mixin grid(columns)
+    .grid(class= 'grid_cols_' + columns)&attributes(attributes)
+        block
+
+
+
+

@@ -1,0 +1,11 @@
+section.login#login
+    .login__step_1
+        h3.hx_center войдите
+        +grid(3)
+            +text('Логин или e-mail…')
+            +pass('Пароль…')
+            +button Войти
+
+    .hidden.login__message_auth-failed
+        +message('error').
+            Неверное имя пользователя или пароль.

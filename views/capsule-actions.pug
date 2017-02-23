@@ -1,0 +1,65 @@
+mixin capsule-actions (capsule, full)
+    if (capsule.sealed && capsule.unsealed && !full)
+        a.mdl-button.mdl-js-button&attributes({
+            href    : '/view/' + user.username + '/' + capsule.id,
+            'class' : full ? ['mdl-button--raised', 'mdl-button--colored'] : undefined
+        })= tl('View')
+
+
+
+    if (capsule.sealed && !capsule.unsealed)
+        a.mdl-button.mdl-js-button&attributes({
+            href    : '/view/' + user.username + '/' + capsule.id,
+            'class' : full ? ['mdl-button--raised', 'mdl-button--colored'] : undefined
+        })= tl('View')
+
+
+
+    if (!capsule.sealed && capsule.unsealed)
+        a.mdl-button.mdl-js-button&attributes({
+            href    : '/edit/' + user.username + '/' + capsule.id,
+            'class' : full ? ['mdl-button--raised', 'mdl-button--colored'] : undefined
+        })= tl('Edit')
+        a.mdl-button.mdl-js-button&attributes({
+            href    : '/view/' + user.username + '/' + capsule.id,
+            'class' : full ? ['mdl-button--raised', 'mdl-button--colored'] : undefined
+        })= tl('View')
+
+
+
+    if (!capsule.sealed && !capsule.unsealed)
+        if (!full )
+            a.mdl-button.mdl-js-button&attributes({
+                href    : '/view/' + user.username + '/' + capsule.id,
+                'class' : full ? ['mdl-button--raised', 'mdl-button--colored'] : undefined
+            })= tl('View')
+
+        a.mdl-button.mdl-js-button&attributes({
+            href    : '/edit/' + user.username + '/' + capsule.id,
+            'class' : full ? ['mdl-button--raised', 'mdl-button--colored'] : undefined
+        })= tl('Edit')
+
+        a.mdl-button.mdl-js-button.button-green(
+            href  = '/pay/' + user.username + '/' + capsule.id
+            class = full ? ['mdl-button--raised', 'mdl-button--colored'] : undefined
+        )
+            = tl('Seal')
+            = ' ('
+            = tl.currency(capsule.cost)
+            = ')'
+
+        if (!full )
+            a.mdl-button.mdl-js-button.button-red(
+                href= '/delete/' + user.username + '/' + capsule.id
+                class= full ? ['mdl-button--raised', 'mdl-button--colored'] : undefined
+            )= tl('Delete')
+            //- tl(full ? 'Pay and seal' : 'Seal')
+            //- + (full ? ' (' + capsule.cost + ')' : '')
+
+
+
+    //- Right side
+    //- if (capsule.sealed && capsule.unsealed)
+    //-     i.material-icons lock_open
+    //- if (capsule.sealed && !capsule.unsealed)
+    //-     i.material-icons lock

@@ -1,0 +1,62 @@
+include components
+
+section.signup#signup
+    .signup__step_1
+        h3.hx_center зарегистрируйтесь
+        +grid(4)
+            +text('Ваше имя…').signup__name
+            +text('Логин…').signup__username
+            +text('E-mail…').signup__mail(required= '')
+            +button Далее…
+
+    .signup__message_bad-input
+        +message('error').
+            Убедитесь, что все поля заполнены верно.#[br/]
+
+            Все поля обязательны.#[br/]
+
+            Имя пользователя должно содержать только
+            латинские буквы (A-z), цифры, точки, дефисы и подчёркивания.#[br/]
+
+            В поле «E-mail» должен быть указан правильный адрес электронной почты.
+
+    .hidden.signup__step_2
+        h3.hx_center Завершение регистрации
+        +grid(3)
+            +pass('Пароль…').signup__password
+            +pass('Повторите пароль…').signup__repeat
+            +button Зарегистрироваться
+
+    .signup__message_weak-password
+        +message('error').
+            Пароль должен содержать не менее 8 символов.
+
+    .signup__message_not-match
+        +message('error').
+            Пароли должны совпадать.
+
+    .signup__message_username-taken
+        +message('error').
+            Пользователь с таким именем уже существует.#[br/]
+
+            Выберите другое имя пользователя
+            или #[a(href= '#restore') восстановите пароль].
+
+    .signup__message_email-taken
+        +message('error').
+            Пользователь с указанной электронной почтой уже существует.#[br/]
+
+            Укажите другой адрес
+            или #[a(href= '#restore') восстановите пароль].
+
+    .signup__message_notice
+        +message('info')
+            | Нажимая «Зарегистрироваться» вы принимаете
+            = ' '
+            a(href= '#') Лицензионное соглашение
+            = ' '
+            | и
+            = ' '
+            a(href= '#') Политику конфиденциальности
+            = ' '
+            | сайта CapsulaTime.

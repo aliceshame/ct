@@ -1,0 +1,83 @@
+doctype html
+html(lang= tl('en'))
+    head
+        meta(name='w1-verification', content='120958794124')
+        meta(charset= 'utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        title= meta.title
+        script(data-cfasync= 'false', src= '/static/scripts/material.min.js')
+        block dp
+            script(data-cfasync= 'false', src= '/static/scripts/dialog-polyfill.js')
+            script(data-cfasync= 'false').
+                document.addEventListener('DOMContentLoaded', function () {
+                    Array.prototype.slice.call(document.querySelectorAll('dialog')).forEach(function (dialog) {
+                        if (!dialog.showModal)
+                            dialogPolyfill.registerDialog(dialog);
+
+                        var close = dialog.querySelector('.close');
+
+                        if (close) {
+                            close.addEventListener('click', function () {
+                                dialog.close();
+                            });
+                        }
+                    });
+                });
+        link(rel= 'stylesheet', href='/static/styles.css')
+        link(rel= 'stylesheet', href= 'https://fonts.googleapis.com/icon?family=Material+Icons')
+        link(rel='icon', href='/favicon.png', type='image/png')
+    body
+        .mdl-menu.mdl-menu--bottom-right.mdl-js-menu(for='lang1')
+            a.mdl-menu__item(href= '/language/ru') Русский
+            a.mdl-menu__item(href= '/language/en') English
+        .mdl-menu.mdl-menu--bottom-left.mdl-js-menu(for='lang2')
+            a.mdl-menu__item(href= '/language/ru') Русский
+            a.mdl-menu__item(href= '/language/en') English
+        .mdl-layout.mdl-js-layout.mdl-layout--fixed-header(class= meta.fixedDrawer ? 'mdl-layout--fixed-drawer' : undefined)
+            //- .mdl-layout--fixed-drawer
+            //- .mdl-layout--fixed-header
+            header.mdl-layout__header
+                //- .mdl-layout__header--scroll
+                .mdl-layout__header-row
+                    span.mdl-layout-title
+                        a(href= '/'): img(src= '/static/images/logo.png')
+                        //- = tl('CapsulaTime')
+                    if (meta.index)
+                        .mdl-layout-spacer
+                        nav.mdl-navigation
+                            each item in meta.menu
+                                a.mdl-navigation__link(href=item.url, id= item.id + '1')
+                                    if (item.icon)
+                                        i.fa(aria-hidden='true', class= 'fa-' + item.icon)
+                                        = '   '
+                                    = item.text
+            .mdl-layout__drawer
+                span.mdl-layout-title
+                    a(href= '/'): img(src= '/static/images/logo.png')
+                    //- = tl('CapsulaTime')
+                nav.mdl-navigation
+                    each item in meta.menu
+                        a.mdl-navigation__link(href=item.url, id= item.id + '2')
+                            if (item.icon)
+                                i.fa(aria-hidden='true', class= 'fa-' + item.icon)
+                                = '   '
+                            = item.text
+                footer.mdl-mini-footer
+                    .mdl-mini-footer__left-section
+                        .mdl-logo= tl('© CapsulaTime, 2016')
+                        ul.mdl-mini-footer__link-list
+                            li: a(href='/static/contacts')= tl('Contacts')
+                            li: a(href='/static/license')= tl('License')
+                            li: a(href='/static/privacy')= tl('Privacy')
+                        ul.mdl-mini-footer__link-list
+                            li: a(href='https://vk.com/capsulatime'): i.fa.fa-vk(aria-hidden='true')
+                            li: a(href='/questions'): i.fa.fa-facebook(aria-hidden='true')
+                            li: a(href='/questions'): i.fa.fa-twitter(aria-hidden='true')
+                        //-ul.mdl-mini-footer__link-list
+                            li: img(src='/static/images/visa.png')
+            main.mdl-layout__content
+                block grid
+                    .mdl-grid
+                        block page
+        block dialogs
+

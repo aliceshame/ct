@@ -1,0 +1,62 @@
+extends layout
+
+include capsule-actions
+
+block grid
+    .mdl-grid.mdl-grid--no-spacing
+        .mdl-cell.mdl-cell--2-col.mdl-cell--hide-phone
+        .mdl-cell.mdl-cell--8-col
+            .mdl-grid.library
+                each capsule in capsules
+                    - var bgPart_ = capsule.parts.find(function (_) { return _.type === 1; })
+                    - var bg_ = bgPart_ ? '/image/' + user.username + '/' + capsule.id + '/' + bgPart_.hash : undefined;
+                    .capsule-card.library__capsule.mdl-cell.mdl-cell--3-col.mdl-cell--8-col-tablet.mdl-cell--4-col-phone.mdl-card.mdl-shadow--2dp&attributes({
+                        id : 'capsuleCard_' + capsule.id,
+                        style : bgPart_ ? 'background-image : url(' + bg_ + ')' : undefined,
+                        'data-id' : capsule.id
+                    })
+                        if (capsule.unsealed)
+                            i.fa.fa-unlock
+                        else if (capsule.sealed)
+                            i.fa.fa-lock
+                        .mdl-card__title.mdl-card--expand
+                            h4
+                                = capsule.title
+                            p
+                                = tl.date(capsule.date)
+                                //- if (!capsule.sealed)
+                                    = ' ('
+                                    = tl.currency(capsule.cost)
+                                    = ')'
+                        .mdl-card__actions
+                            +capsule-actions(capsule, false)
+                a(href= '/create').capsule-create.library__capsule.mdl-cell.mdl-cell--3-col.mdl-cell--8-col-tablet.mdl-cell--4-col-phone
+                    i.fa.fa-plus
+        .mdl-cell.mdl-cell--2-col.mdl-cell--hide-phone
+
+
+
+
+
+
+block dialogs
+    dialog.yes-no.mdl-dialog
+        h6.mdl-dialog__title= tl('Delete capsule?')
+        .mdl-dialog__actions
+            button.mdl-button.mdl-button--colored.mdl-button--raised.close(type='button')
+                = tl('No')
+            a(href='#').mdl-button.mdl-button--colored.mdl-button--raised.yes
+                = tl('Yes')
+    script.
+        const capsules = Array.prototype.slice.apply(document.querySelectorAll('.button-red'));
+
+        const yesNo = document.querySelector('.yes-no');
+        const yes   = yesNo.querySelector('.yes');
+
+        capsules.forEach(function (capsule) {
+            capsule.addEventListener('click', function (event) {
+                event.preventDefault();
+                yes.setAttribute('href', capsule.getAttribute('href'));
+                yesNo.showModal();
+            });
+        });

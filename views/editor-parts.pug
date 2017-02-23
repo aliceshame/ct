@@ -1,0 +1,74 @@
+.mdl-grid.editor-grid-meta
+    //- .mdl-cell.mdl-cell--12-col.mdl-cell--4-col-phone.form-section
+        .mdl-layout-spacer.mdl-cell--hide-phone: hr
+        .form-section__text= tl('Capsule title')
+        .mdl-layout-spacer.mdl-cell--hide-phone: hr
+    .mdl-cell.mdl-cell--12-col.mdl-cell--4-col-phone
+        .mdl-textfield.mdl-js-textfield.editor-title
+            input#editorForm__title.mdl-textfield__input(
+            type='text'
+            value= capsule.title
+            pattern= patterns.capsule.title.source
+            required= ''
+            )
+            label.mdl-textfield__label(for='editorForm__title')= tl('Enter capsule title')
+            span.mdl-textfield__error= tl('This field cannot be empty.')
+    //- button#receiversTop.mdl-cell.mdl-cell--2-col.mdl-button.mdl-button--colored.mdl-button--raised.mdl-js-button.mdl-cell--2-col-phone= tl('Receivers…')
+.mdl-grid.editor-grid
+    each part in capsule.parts
+        +part(part, meta.PartType)
+.mdl-grid.editor-grid-meta
+    .mdl-cell.mdl-cell--12-col.mdl-cell--4-col-phone.form-section
+        .mdl-layout-spacer: hr
+        .form-section__text= tl('Add attachment')
+        .mdl-layout-spacer: hr
+    .mdl-cell.mdl-cell--12-col.capsule-card__editor-actions
+        button#addImage.mdl-button.mdl-js-button.mdl-button--primary
+            h3: i.fa.fa-file-text-o
+            span= tl('Select file…')
+.mdl-grid.editor-grid-meta
+    .mdl-cell.mdl-cell--12-col.mdl-cell--4-col-phone.form-section
+        .mdl-layout-spacer: hr
+        .form-section__text= tl('Unsealing date')
+        .mdl-layout-spacer: hr
+    .mdl-cell.mdl-cell--12-col.mdl-cell--4-col-phone.mdl-grid
+        .mdl-cell.mdl-cell--4-col.mdl-cell--2-col-tablet.mdl-cell--hide-phone
+        .mdl-cell.mdl-cell--2-col.mdl-cell--2-col-phone.mdl-cell--2-col-tablet
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input#editorForm__date_year.mdl-textfield__input(
+                    type='number'
+                    value= capsule.date.format('YYYY')
+                    required= ''
+                    min= (new Date().getFullYear())
+                    step= 1
+                )
+                label.mdl-textfield__label(for='editorForm__date_year')= tl('Year*')
+
+        .mdl-cell.mdl-cell--1-col.mdl-cell--1-col-phone.mdl-cell--1-col-tablet
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input#editorForm__date_month.mdl-textfield__input(
+                    type='number'
+                    value= capsule.date.format('MM')
+                    required= ''
+                    min= 1
+                    max= 12
+                    step= 1
+                )
+                label.mdl-textfield__label(for='editorForm__date_month')= tl('Month*')
+
+        .mdl-cell.mdl-cell--1-col.mdl-cell--1-col-phone.mdl-cell--1-col-tablet
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input#editorForm__date_day.mdl-textfield__input(
+                    type='number'
+                    value= capsule.date.format('DD')
+                    required= ''
+                    min= 1
+                    max= 31
+                    step= 1
+                )
+                label.mdl-textfield__label(for='editorForm__date_day')= tl('Day*')
+
+        .mdl-cell.mdl-cell--4-col.mdl-cell--2-col-tablet.mdl-cell--hide-phone
+        .mdl-cell.mdl-cell--4-col.mdl-cell--2-col-tablet.mdl-cell--hide-phone
+        button#receiversTop.mdl-cell.mdl-cell--4-col.mdl-cell--4-col-tablet.mdl-button.mdl-button--colored.mdl-button--raised.mdl-js-button= tl('Receivers…')
+        .mdl-cell.mdl-cell--4-col.mdl-cell--2-col-tablet.mdl-cell--hide-phone

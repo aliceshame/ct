@@ -1,0 +1,166 @@
+extends layout
+
+block page
+    .mdl-cell.mdl-cell--3-col.mdl-cell--hide-tablet
+    .capsule-card.mdl-cell.mdl-cell--6-col.mdl-cell--8-col-tablet.mdl-card.mdl-shadow--2dp
+        .mdl-card__title
+            .mdl-grid.editor-grid-meta
+                .mdl-cell.mdl-cell--12-col.mdl-cell--4-col-phone.form-section
+                    .mdl-layout-spacer.mdl-cell--hide-phone: hr
+                    .form-section__text= tl('Change information')
+                    .mdl-layout-spacer.mdl-cell--hide-phone: hr
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input#signup__login.mdl-textfield__input(
+                type='text'
+                pattern= fields.signup.userName
+                autocomplete= 'username'
+                value= user.username
+                )
+                label.mdl-textfield__label(for='signup__login')= tl('Username')
+                span.mdl-textfield__error= tl('A-z, digits, dots, underscores, hyphens; at least one character.')
+
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input#signup__name.mdl-textfield__input(
+                type='text'
+                pattern= fields.signup.realName
+                autocomplete= 'name'
+                value= user.name
+                )
+                label.mdl-textfield__label(for='signup__name')= tl('Real name')
+                span.mdl-textfield__error= tl('This field cannot be empty.')
+
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input#signup__email.mdl-textfield__input(
+                type='email'
+                pattern= fields.signup.email
+                value= user.email
+                )
+                label.mdl-textfield__label(for='signup__email')= tl('Email')
+                span.mdl-textfield__error= tl('Enter valid email address.')
+
+            .mdl-grid.editor-grid-meta
+                .mdl-cell.mdl-cell--12-col.mdl-cell--4-col-phone.form-section
+                    .mdl-layout-spacer.mdl-cell--hide-phone: hr
+                    .form-section__text= tl('Change password')
+                    .mdl-layout-spacer.mdl-cell--hide-phone: hr
+
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input#signup__oldPassword.mdl-textfield__input(
+                type='password'
+                autocomplete= 'current--password',
+                pattern= fields.signup.password
+                )
+                label.mdl-textfield__label(for='signup__oldPassword')= tl('Old password')
+                span.mdl-textfield__error
+
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input#signup__password.mdl-textfield__input(
+                type='password'
+                autocomplete= 'new-password',
+                pattern= fields.signup.password
+                )
+                label.mdl-textfield__label(for='signup__password')= tl('Password')
+                span.mdl-textfield__error= tl('At least 6 characters')
+
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input#signup__passwordConfirm.mdl-textfield__input(
+                type='password'
+                autocomplete= 'new-password'
+                )
+                label.mdl-textfield__label(for='signup__passwordConfirm')= tl('Repeat password')
+                span.mdl-textfield__error= tl('Password must be matching.')
+
+            .mdl-grid.profile-actions
+                .mdl-cell.mdl-cell--3-col.mdl-cell--1-col-tablet.mdl-cell--hide-phone
+                button#signup__proceed.mdl-cell.mdl-cell--6-col.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored= tl('Save')
+                .mdl-cell.mdl-cell--3-col.mdl-cell--hide-phone
+
+            .mdl-grid.editor-grid-meta.settings-language
+                .mdl-cell.mdl-cell--12-col.mdl-cell--4-col-phone.form-section
+                    .mdl-layout-spacer.mdl-cell--hide-phone: hr
+                    .form-section__text= tl('Language')
+                    .mdl-layout-spacer.mdl-cell--hide-phone: hr
+                .mdl-cell.mdl-cell--12-col.mdl-cell--4-col-phone
+                    a(href='/language/ru') Русский
+                    a(href='/language/en') English
+
+            //- .sns-grid
+                a(
+                    href='https://oauth.vk.com/authorize?' +
+                        'client_id=5658345&' +
+                        'redirect_uri=https://capsulatime.com/sns&' +
+                        'scope=friends,messages&' +
+                        'response_type=code'
+                ).sns-grid__button.sns-grid__button_vk
+                    i.fa.fa-vk
+
+    .mdl-cell.mdl-cell--3-col
+
+
+
+
+
+
+
+block dialogs
+    dialog.invalid-login-or-password.mdl-dialog
+        h4.mdl-dialog__title= tl('Failed to authenticate')
+        .mdl-dialog__content
+            p= tl('Invalid login or password.')
+        .mdl-dialog__actions
+            button.mdl-button.close(type='button')= tl('OK')
+    dialog.bad-input.mdl-dialog
+        h4.mdl-dialog__title= tl('Bad input')
+        .mdl-dialog__content
+            p= tl('Please, make sure, all fields filled properly.')
+        .mdl-dialog__actions
+            button.mdl-button.close(type='button')= tl('OK')
+    dialog.unknown-error.mdl-dialog
+        h4.mdl-dialog__title= tl('An error occurred')
+        .mdl-dialog__content
+            p= tl('Unknown error occurred; please, try again later. If error occurred again, please, contacts us.')
+        .mdl-dialog__actions
+            button.mdl-button.close(type='button')= tl('OK')
+    dialog.invalid-email.mdl-dialog
+        h4.mdl-dialog__title= tl('Invalid email')
+        .mdl-dialog__content
+            p= tl('Invalid or unavailable email.')
+        .mdl-dialog__actions
+            button.mdl-button.close(type='button')= tl('OK')
+    dialog.invalid-username.mdl-dialog
+        h4.mdl-dialog__title= tl('Invalid username')
+        .mdl-dialog__content
+            p= tl('Invalid or unavailable username.')
+        .mdl-dialog__actions
+            button.mdl-button.close(type='button')= tl('OK')
+    dialog.invalid-name.mdl-dialog
+        h4.mdl-dialog__title= tl('Invalid name')
+        .mdl-dialog__content
+            p= tl('Invalid real name.')
+        .mdl-dialog__actions
+            button.mdl-button.close(type='button')= tl('OK')
+    dialog.weak-password.mdl-dialog
+        h4.mdl-dialog__title= tl('Weak password')
+        .mdl-dialog__content
+            p= tl('Invalid or weak password.')
+        .mdl-dialog__actions
+            button.mdl-button.close(type='button')= tl('OK')
+    dialog.success-dialog.mdl-dialog
+        h4.mdl-dialog__title= tl('Success')
+        .mdl-dialog__content
+            p= tl('Settings successfully saved.')
+        .mdl-dialog__actions
+            button.mdl-button.close(type='button')= tl('OK')
+    dialog.bad-password-confirm.mdl-dialog
+        h4.mdl-dialog__title= tl('Bad input')
+        .mdl-dialog__content
+            p!= tl('Please, make sure <b>Password</b> and <b>Repeat password</b> fields are matching.')
+        .mdl-dialog__actions
+            button.mdl-button.close(type='button')= tl('OK')
+
+    //- dialog.authenticate-vk.mdl-dialog
+        iframe()
+
+
+
+    script(data-cfasync= 'false', src= '/static/scripts/profile.js')

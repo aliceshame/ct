@@ -1,0 +1,37 @@
+extends layout
+
+include capsule-actions
+
+block page
+    .mdl-cell.mdl-cell--2-col
+    .capsule-card.capsule-viewer.mdl-cell.mdl-cell--8-col.mdl-card.mdl-shadow--2dp
+        a(href='/library').editor-times
+            i.fa.fa-times
+        //- if (capsule.owned)
+            .mdl-card__actions.mdl-card--border-bottom
+                +capsule-actions(capsule, true)
+        .mdl-card__title.mdl-card--expand
+            //- .capsule-card__part.capsule-card__part_text
+                blockquote: p= tl('Unsealing date: ') + tl.date(capsule.date)
+            h3= capsule.title
+            each part in capsule.parts
+                if (part.type === meta.PartType[ 'Text' ])
+                    .capsule-card__part.capsule-card__part_text!= part.content
+                if (part.type === meta.PartType[ 'Attachment' ])
+                    .capsule-card__part.capsule-card__part_attachment.view-attachment
+                        p
+                            i.fa(class= 'fa-' + icon(part.icon))
+                            = ' '
+                            a(href= '/image/' + user.username + '/' + capsule.id + '/' + part.hash, download= part.name)= part.name
+                            = ' ('
+                            span.view-attachment__size= tl.bytes(part.size)
+                            = ')'
+                if (part.type === meta.PartType[ 'Image' ])
+                    .capsule-card__part.capsule-card__part_image
+                        img.mdl-shadow--16dp(src= '/image/' + user.username + '/' + capsule.id + '/' + part.hash)
+            //- .capsule-card__part.capsule-card__part_text
+                p= tl('Unsealing date: ') + tl.date(capsule.date)
+        if (capsule.owned)
+            .mdl-card__actions.mdl-card--border
+                +capsule-actions(capsule, true)
+    .mdl-cell.mdl-cell--2-col

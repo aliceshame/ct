@@ -1,0 +1,22 @@
+include components
+
+mixin backdrop
+    .backdrop
+        .backdrop__scanline
+
+
+doctype html
+
+meta(name= 'viewport' content= 'width=device-width, initial-scale=1')
+
+title CapsulaTime
+
+link(rel= 'stylesheet' href= '//fonts.googleapis.com/css?family=Cormorant+Garamond:300i&subset=cyrillic')
+link(rel= 'stylesheet' href= '/stylesheets/style.css')
+
+script(src= '/javascripts/landing.js')
+
++backdrop
+include header
+include main
+include footer

@@ -1,0 +1,25 @@
+{
+  "name": "ctmdl",
+  "dependencies": {},
+  "devDependencies": {
+    "body-parser": "registry:npm/body-parser#1.15.2+20160815132839",
+    "express": "registry:npm/express#4.14.0+20160922175659",
+    "mongoose": "registry:npm/mongoose#4.3.5+20160628072220",
+    "redis": "registry:npm/redis#2.6.0+20160901110043",
+    "request": "registry:npm/request#2.69.0+20160428223725"
+  },
+  "globalDevDependencies": {
+    "bcrypt-nodejs": "registry:dt/bcrypt-nodejs#0.0.0+20160316155526",
+    "connect-redis": "registry:dt/connect-redis#0.0.0+20160305170114",
+    "cookie-parser": "registry:dt/cookie-parser#1.3.4+20160316155526",
+    "express-less": "registry:dt/express-less#0.0.0+20160317120654",
+    "express-session": "registry:dt/express-session#0.0.0+20160819134112",
+    "helmet": "registry:dt/helmet#0.0.0+20160512043842",
+    "moment": "registry:dt/moment#2.11.1+20160829143156",
+    "node": "registry:env/node#6.0.0+20160918225031"
+  },
+  "globalDependencies": {
+    "iconv": "registry:dt/iconv#2.1.11+20160417151847",
+    "morgan": "registry:dt/morgan#1.7.0+20160524142355"
+  }
+}

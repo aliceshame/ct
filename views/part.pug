@@ -1,0 +1,58 @@
+mixin scribe-command (part, key, title, command, icon)
+    button.mdl-button.mdl-button--colored(
+        data-command-name= command
+        id= 'scribeCommand__' + command + '_' + part.id
+    )
+        i.fa(class= 'fa-' + icon)
+    .mdl-tooltip(data-mdl-for= 'scribeCommand__' + command + '_' + part.id)
+        = tl(title)
+        br
+        = key
+
+mixin part (part, PartType)
+    - if (part.type === PartType.Image && part.hash) var style = 'background-image : url(/image/' + user.username + '/' + capsule.id + '/' + part.hash + ')'
+    .capsule-part.mdl-card(
+        style= style
+        class= part.type === PartType.Image ? 'capsule-part_image' : undefined
+        class= part.type === PartType.Attachment ? 'capsule-part_attachment' : undefined
+        class= part.type === PartType.Text ? 'capsule-part_text' : undefined
+        class= part.type === PartType.Text ? 'mdl-cell--12-col' : [
+            'mdl-cell--3-col',
+            'mdl-cell--4-col-phone'
+        ]
+        data-id   = part.id
+        data-size = part.size
+        data-type = part.type
+        data-icon = part.icon
+        data-hash = part.hash
+        data-name = part.name
+    )
+        .mdl-card__title.mdl-card--expand
+            if (part.type === PartType.Attachment)
+                h4
+                    i.fa(class= 'fa-' + icon(part.icon))
+                p.capsule-part__attachment-size= tl.bytes(part.size)
+                p.capsule-part__attachment-name: a(href= '/image/' + user.username + '/' + capsule.id + '/' + part.hash, download= part.name)= part.name
+            if (part.type === PartType.Text)
+                .scribe
+                    .scribe__toolbar.mdl-card__actions.mdl-card--border-bottom
+                        +scribe-command(part, 'Ctrl+B',       'Bold',           'bold',                'bold')
+                        +scribe-command(part, 'Ctrl+I',       'Italic',         'italic',              'italic')
+                        +scribe-command(part, 'Ctrl+U',       'Underline',      'underline',           'underline')
+                        +scribe-command(part, 'Alt+Shift+S',  'Strike through', 'strikeThrough',       'strikethrough')
+                        +scribe-command(part, 'Alt+Shift+A',  'Remove format',  'removeFormat',        'eraser')
+                        +scribe-command(part, 'Ctrl+K',       'Link',           'linkPrompt',          'link')
+                        +scribe-command(part, 'Ctrl+Shift+K', 'Unlink',         'unlink',              'chain-broken')
+                        +scribe-command(part, 'Alt+Shift+B',  'Ordered list',   'insertOrderedList',   'list-ol')
+                        +scribe-command(part, 'Alt+Shift+N',  'Unordered list', 'insertUnorderedList', 'list-ul')
+                        +scribe-command(part, 'Alt+Shift+W',  'Blockquote',     'blockquote',          'quote-right')
+                        +scribe-command(part, 'Alt+Shift+H',  'Header',         'h5',                  'header')
+                        +scribe-command(part, 'Ctrl+Z',       'Undo',           'undo',                'undo')
+                        +scribe-command(part, 'Ctrl+Shift+Z', 'Redo',           'redo',                'repeat')
+                        .scroll
+                    .scribe__content!= part.content
+        if (part.type === PartType.Attachment || part.type === PartType.Image)
+            .mdl-card__actions
+                .capsule-part__actions
+                    button.capsule-part__rm.mdl-button.mdl-js-button.mdl-button--colored
+                        i.fa.fa-times

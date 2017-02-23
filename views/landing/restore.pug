@@ -1,0 +1,12 @@
+section.restore#restore
+    p.hx_center.restore__toggle: a(href= '#restore__step_1') Забыли пароль?
+
+    .hidden.restore__step_1
+        h3.hx_center Восстановление пароля
+        +grid(2)
+            +text('Логин или E-mail…')
+            +button Восстановить пароль
+
+    .restore__message_sent
+        +message('success').
+            Сообщение с данными для восстановления пароля отправлено вам на E-mail.

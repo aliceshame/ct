@@ -1,0 +1,91 @@
+extends layout
+
+include part
+
+block grid
+    //- .stats: pre: code
+    .mdl-grid.editor-grid-phone
+        .mdl-cell.mdl-cell--2-col
+        .capsule-card.capsule-card_editor.mdl-cell.mdl-cell--8-col.mdl-card.mdl-shadow--2dp(
+        data-id=capsule.id
+        data-size= capsule.size
+        data-sealed=capsule.sealed ? 'true' : 'false'
+        data-unsealed=capsule.unsealed ? 'true' : 'false'
+        data-cost=capsule.cost
+        data-date=capsule.date.format('YYYY-MM-DD')
+        data-username=user.username
+        )
+            .editor-times
+                i.fa.fa-times
+            .mdl-card__actions.mdl-card--border-bottom.hidden
+                a#deleteTop.mdl-button.mdl-button--colored.mdl-js-button(href= '/delete/' + user.username + '/' + capsule.id)= tl('Delete')
+                .mdl-layout-spacer
+                button#saveTop.mdl-button.mdl-button--colored.mdl-js-button= tl('Save')
+                button#sealTop.mdl-button.mdl-button--colored.mdl-js-button= tl('Seal') + ' (' + tl.currency(capsule.cost) + ')'
+                // button#receiversTop.mdl-button.mdl-button--colored.mdl-js-button= tl('Receivers')
+            .mdl-card__title.mdl-card--expand
+                include editor-parts
+            .mdl-card__actions.mdl-card--border
+                a#deleteBottom.hidden.mdl-button.mdl-button--raised.mdl-button--colored.mdl-js-button(href= '/delete/' + user.username + '/' + capsule.id)= tl('Delete')
+                .mdl-layout-spacer
+                button#receiversBottom.hidden.mdl-button.mdl-button--colored.mdl-js-button= tl('Receivers')
+                button#saveBottom.mdl-button.mdl-button--raised.mdl-button--colored.mdl-js-button= tl('Save')
+                button#sealBottom.mdl-button.mdl-button--raised.mdl-button--colored.mdl-js-button
+                    = tl('Seal')
+                    = ' ('
+                    = tl.currency(capsule.cost)
+                    = ')'
+        .mdl-cell.mdl-cell--2-col
+
+block dp
+    //       •          •
+    //     ⋅          ⋅
+    //    ⋅          ⋅
+    //   /*\        /*\
+    //   | |        | |
+    //   | |        | |
+    //   | |        | |
+    //   | |        | |
+    // (*| |*)    (*| |*)
+
+block dialogs
+    dialog.receivers-dialog.mdl-dialog
+        include editor-receivers
+    dialog.part-templates
+        .part-templates__image
+            +part({
+                type : meta.PartType.Image
+            }, meta.PartType)
+        .part-templates__attachment
+            +part({
+                type : meta.PartType.Attachment,
+                icon : meta.PartIcon.Archive,
+                name : '',
+                size : 0
+            }, meta.PartType)
+        input#fileDesu(type='file')
+        span.mdl-chip.mdl-chip--contact.mdl-chip--deletable
+            span.mdl-chip__contact.mdl-color--teal.mdl-color-text--white
+            span.mdl-chip__text
+            button.mdl-chip__action: i.fa.fa-times
+    dialog.bad-input.mdl-dialog
+        h4.mdl-dialog__title= tl('File size error')
+        .mdl-dialog__content
+            p= tl('Max. capsule size — 30 MB.')
+        .mdl-dialog__actions
+            button.mdl-button.mdl-button--colored.mdl-button--raised.close(type='button')= tl('OK')
+    dialog.save-dialog.mdl-dialog
+        h4.mdl-dialog__title= tl('Save progress…')
+        .mdl-dialog__content
+            .mdl-progress.mdl-js-progress
+    dialog.yes-no-cancel.mdl-dialog
+        h6.mdl-dialog__title= tl('Save changes?')
+        .mdl-dialog__actions
+            button.mdl-button.mdl-button--colored.mdl-button--raised.close(type='button')
+                = tl('Cancel')
+            a(href= '/').mdl-button.mdl-button--colored.mdl-button--raised.no
+                = tl('No')
+            button.mdl-button.mdl-button--colored.mdl-button--raised.yes(type='button')
+                = tl('Yes')
+    script(data-cfasync= 'false', src= '/static/scripts/edit.js')
+    script(data-cfasync= 'false', data-main= '/static/scripts/rich-editor.js' src= '/static/scripts/require.js')

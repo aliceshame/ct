@@ -1,0 +1,159 @@
+extends layout
+
+block page
+    style.
+        .notice {
+            font-size : 10px;
+        }
+    .mdl-cell.mdl-cell--9-col.mdl-cell--hide-phone
+        //- img.logo-big(src= '/static/images/logo-big.png')
+    .mdl-cell.mdl-cell--3-col.mdl-cell--8-col-tablet.mdl-cell--4-col-phone
+        .card-auth.mdl-card.mdl-shadow--2dp
+            .mdl-card__title.mdl-card--expand
+                h6= tl('Login')
+
+                .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                    input#login__login.mdl-textfield__input(
+                    type='text'
+                    autocomplete= 'off'
+                    )
+                    label.mdl-textfield__label(for='login__login')= tl('Email or username')
+
+                .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                    input#login__password.mdl-textfield__input(
+                    type='password'
+                    autocomplete= 'off'
+                    )
+                    label.mdl-textfield__label(for='login__password')= tl('Password')
+                    span.mdl-textfield__error= tl('Invalid password.')
+
+                .card-auth__buttons
+                    button#login__button.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored= tl('Log in')
+                    button#restore__proceed.mdl-button.mdl-js-button.mdl-button--primary.mdl-js-ripple-effect= tl('Forgot password?')
+
+        .card-auth.mdl-card.mdl-shadow--2dp
+            .mdl-card__title.mdl-card--expand
+                h6= tl('Signup')
+
+                .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                    input#signup__login.mdl-textfield__input(
+                    type='text'
+                    pattern= fields.signup.userName
+                    autocomplete= 'off'
+                    )
+                    label.mdl-textfield__label(for='signup__login')= tl('Username*')
+                    span.mdl-textfield__error= tl('A-z, digits, dots, underscores, hyphens; at least one character.')
+
+                .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                    input#signup__name.mdl-textfield__input(
+                    type='text'
+                    pattern= fields.signup.realName
+                    autocomplete= 'off'
+                    )
+                    label.mdl-textfield__label(for='signup__name')= tl('Real name*')
+                    span.mdl-textfield__error= tl('This field cannot be empty.')
+
+                .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                    input#signup__email.mdl-textfield__input(
+                    type='email'
+                    pattern= fields.signup.email
+                    autocomplete='off'
+                    )
+                    label.mdl-textfield__label(for='signup__email')= tl('Email*')
+                    span.mdl-textfield__error= tl('Enter valid email address.')
+
+                p.notice
+                    = tl('By clicking Sign up you agree to our ')
+                    a(href= '/static/license')= tl('license agreement')
+                    = tl(' and ')
+                    a(href= '/static/privacy')= tl('privacy policy')
+                    = tl('.')
+
+                .card-auth__buttons
+                    button#signup__proceed.mdl-button.mdl-js-button.mdl-button--raised.mdl-button--colored= tl('Sign up')
+
+block dialogs
+    dialog.invalid-login-or-password.mdl-dialog
+        h4.mdl-dialog__title= tl('Failed to authenticate')
+        .mdl-dialog__content
+            p= tl('Invalid login or password.')
+        .mdl-dialog__actions
+            button.mdl-button.mdl-button--colored.mdl-button--raised.close(type='button')= tl('OK')
+    dialog.next-step.mdl-dialog
+        h4.mdl-dialog__title= tl('Finish registration')
+        .mdl-dialog__content
+            form(action='/auth', method= 'post')
+                .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                    input#signup__password.mdl-textfield__input(
+                    type='password'
+                    autocomplete= 'off',
+                    pattern= fields.signup.password
+                    )
+                    label.mdl-textfield__label(for='signup__password')= tl('Password*')
+                    span.mdl-textfield__error= tl('At least 6 characters')
+
+                .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                    input#signup__passwordConfirm.mdl-textfield__input(
+                    type='password'
+                    autocomplete= 'off'
+                    )
+                    label.mdl-textfield__label(for='signup__passwordConfirm')= tl('Repeat password*')
+                    span.mdl-textfield__error= tl('Password must be matching.')
+        .mdl-dialog__actions
+            button#signup__finish.mdl-button.mdl-button--colored.mdl-button--raised(type='button')= tl('Finish')
+            button.mdl-button.mdl-button--colored.mdl-button--raised.close(type='button')= tl('Cancel')
+    dialog.bad-input.mdl-dialog
+        h4.mdl-dialog__title= tl('Bad input')
+        .mdl-dialog__content
+            p= tl('Please, make sure, all fields with asterisk filled properly.')
+        .mdl-dialog__actions
+            button.mdl-button.mdl-button--colored.mdl-button--raised.close(type='button')= tl('OK')
+    dialog.unknown-error.mdl-dialog
+        h4.mdl-dialog__title= tl('An error occurred')
+        .mdl-dialog__content
+            p= tl('Unknown error occurred; please, try again later. If error occurred again, please, contacts us.')
+        .mdl-dialog__actions
+            button.mdl-button.mdl-button--colored.mdl-button--raised.close(type='button')= tl('OK')
+    dialog.invalid-email.mdl-dialog
+        h4.mdl-dialog__title= tl('Invalid email')
+        .mdl-dialog__content
+            p= tl('Invalid or unavailable email.')
+        .mdl-dialog__actions
+            button.mdl-button.mdl-button--colored.mdl-button--raised.close(type='button')= tl('OK')
+    dialog.invalid-username.mdl-dialog
+        h4.mdl-dialog__title= tl('Invalid username')
+        .mdl-dialog__content
+            p= tl('Invalid or unavailable username.')
+        .mdl-dialog__actions
+            button.mdl-button.mdl-button--colored.mdl-button--raised.close(type='button')= tl('OK')
+    dialog.invalid-name.mdl-dialog
+        h4.mdl-dialog__title= tl('Invalid name')
+        .mdl-dialog__content
+            p= tl('Invalid real name.')
+        .mdl-dialog__actions
+            button.mdl-button.mdl-button--colored.mdl-button--raised.close(type='button')= tl('OK')
+    dialog.weak-password.mdl-dialog
+        h4.mdl-dialog__title= tl('Weak password')
+        .mdl-dialog__content
+            p= tl('Invalid or weak password.')
+        .mdl-dialog__actions
+            button.mdl-button.mdl-button--colored.mdl-button--raised.close(type='button')= tl('OK')
+    dialog.restore-success.mdl-dialog
+        h4.mdl-dialog__title= tl('Success')
+        .mdl-dialog__content
+            p= tl('Link to restore access sent to your email.')
+        .mdl-dialog__actions
+            button.mdl-button.mdl-button--colored.mdl-button--raised.close(type='button')= tl('OK')
+    dialog.restore.mdl-dialog
+        h4.mdl-dialog__title= tl('Restore password')
+        .mdl-dialog__content
+            .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label
+                input#restore__login.mdl-textfield__input(
+                type='text'
+                autocomplete= 'username'
+                )
+                label.mdl-textfield__label(for='login__login')= tl('Email or username*')
+        .mdl-dialog__actions
+            button#restore__finish.mdl-button.mdl-button--colored.mdl-button--raised= tl('Finish')
+            button.mdl-button.mdl-button--colored.mdl-button--raised.close(type='button')= tl('Cancel')
+    script(data-cfasync= 'false', src= '/static/scripts/signup.js')

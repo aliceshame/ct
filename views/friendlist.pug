@@ -1,0 +1,32 @@
+mixin friendlist (receivers, friends, service, token)
+    if token
+        .receivers-dialog__chips
+            each receiver in receivers
+                if receiver.service === service
+                    span.mdl-chip.mdl-chip--contact.mdl-chip--deletable(
+                    data-address = receiver.address
+                    data-service = receiver.service
+                    data-photo   = receiver.photo
+                    data-name    = receiver.name
+                    )
+                        span.mdl-chip__contact.mdl-color--teal.mdl-color-text--white
+                        span.mdl-chip__text= receiver.address
+                        button.mdl-chip__action: i.fa.fa-times
+        .receivers-dialog__friends
+            .mdl-list.mdl-grid.mdl-grid--no-spacing
+                each friend in friends
+                    if friend.service === service
+                        .mdl-list__item.mdl-cell.mdl-cell--12-col(
+                        data-address = friend.address
+                        data-name    = friend.name
+                        data-service = friend.service
+                        data-photo   = friend.photo
+                        class        = capsule.receivers.find(function (r_) {
+                            return friend.service === r_.service && friend.address === r_.address
+                        }) ? 'hidden' : undefined
+                        )
+                            span.mdl-list__item-primary-content
+                                span.mdl-list__item-avatar(style= 'background-image : url(' + friend.photo + ')')
+                                span.name= friend.name
+    else
+        | Unauthorized.

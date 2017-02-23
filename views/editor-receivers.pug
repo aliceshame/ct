@@ -1,0 +1,42 @@
+include friendlist
+
+h4.mdl-dialog__title= tl('Receivers')
+.mdl-dialog__content
+        //- .mdl-tabs.mdl-js-tabs
+        //- .mdl-tabs__tab-bar
+            a.mdl-tabs__tab.is-active(href='#email-panel'): i.fa.fa-envelope
+            //- a.mdl-tabs__tab(href='#telegram-panel'): i.fa.fa-paper-plane
+            a.mdl-tabs__tab(href='#twitter-panel'): i.fa.fa-twitter
+            a.mdl-tabs__tab(href='#vk-panel'): i.fa.fa-vk
+            a.mdl-tabs__tab(href='#facebook-panel'): i.fa.fa-facebook
+            //- a.mdl-tabs__tab(href='#ok-panel'): i.fa.fa-odnoklassniki
+        #email-panel
+            //- .mdl-tabs__panel.is-active
+            .receivers-dialog__chips
+                each receiver in capsule.receivers
+                    if receiver.service === meta.ReceiverService.Email
+                        span.mdl-chip.mdl-chip--contact.mdl-chip--deletable(
+                            data-address = receiver.address
+                            data-service = receiver.service
+                        )
+                            span.mdl-chip__contact.mdl-color--teal.mdl-color-text--white= receiver.address[0]
+                            span.mdl-chip__text= receiver.address
+                            button.mdl-chip__action: i.fa.fa-times
+            .receivers-dialog__email-input.mdl-grid
+                .mdl-cell.mdl-cell--9-col.mdl-cell--4-col-phone
+                    .mdl-textfield.mdl-js-textfield.mdl-textfield--floating-label.mdl-cell--4-col
+                        label.mdl-textfield__label(for='emailInput')= tl('Email address')
+                        input#emailInput.mdl-textfield__input(type= 'email')
+                button.mdl-button.mdl-button--colored.mdl-button--raised.mdl-cell--2-col.mdl-cell.mdl-cell--3-col.mdl-cell--4-col-phone= tl('Add')
+        //- #telegram-panel.mdl-tabs__panel
+        //-     +friendlist(capsule.receivers, friends, meta.ReceiverService.Telegram, user.tokens.telegram)
+        //- #twitter-panel.mdl-tabs__panel
+        //-     +friendlist(capsule.receivers, friends, meta.ReceiverService.Twitter, user.tokens.twitter)
+        //- #vk-panel.mdl-tabs__panel
+        //-     +friendlist(capsule.receivers, friends, meta.ReceiverService.Vk, user.tokens.vk)
+        //- #facebook-panel.mdl-tabs__panel
+        //-     +friendlist(capsule.receivers, friends, meta.ReceiverService.Facebook, user.tokens.facebook)
+        //- #ok-panel.mdl-tabs__panel
+        //-     +friendlist(capsule.receivers, friends, meta.ReceiverService.Ok, user.tokens.ok)
+.mdl-dialog__actions
+    button.mdl-button.mdl-button--colored.mdl-button--raised.close= tl('OK')
